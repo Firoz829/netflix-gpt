@@ -74,7 +74,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - create-react-app
 - configured TailwindCSS 3.4.17
 - Header
+- Routing of app
 - Login Form - in u want to create form u can use https://formik.org/ library
+- sign up form - using same sign in form chnage to sing up
+- Form validation
+- useRef Hook
+- firebase setup
+- deploying our app to production
+- create signup user AC
+- implement sign in user api
+- created redux store with userSlice
+- implemented sign out feature
+- update profile api
 
 ## Features
 

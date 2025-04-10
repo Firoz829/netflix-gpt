@@ -1,12 +1,96 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "./utils/Validation";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "./utils/FireBase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "./utils/UserSlice";
 
 const Login = () => {
   const [isSingInForm, setIsSingInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
 
   const toggleSignInForm = () => {
     setIsSingInForm(!isSingInForm);
   };
+
+  const handleButtonClick = () => {
+    //validate the form data
+    // console.log(email.current.value);
+    // console.log(password.current.value);
+    const message = checkValidData(email.current.value, password.current.value);
+    // console.log(message);
+    setErrorMessage(message);
+    if (message) return; // null
+
+    if (!isSingInForm) {
+      //sign up logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/112467885?v=4",
+          })
+            .then(() => {
+              // Profile updated! and again store update
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorCode + " " + errorMessage);
+        });
+    } else {
+      //sign in logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user1 = userCredential.user;
+          console.log(user1);
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode1 = error.code;
+          const errorMessage1 = error.message;
+          console.log(errorCode1 + " " + errorMessage1);
+        });
+    }
+  };
+
   return (
     <div className="logo">
       <Header />
@@ -16,31 +100,44 @@ const Login = () => {
           alt="logo"
         />
       </div>
-      <form className="rounded-lg absolute p-12 bg-black w-4/12 my-36 mx-auto right-0 left-0 text-white bg-opacity-90">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="rounded-lg absolute p-12 bg-black w-4/12 my-36 mx-auto right-0 left-0 text-white bg-opacity-90"
+      >
         <h1 className="font-bold text-3xl py-4">
           {isSingInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSingInForm && (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="p-4 my-4 w-full bg-gray-700 rounded-lg"
           ></input>
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email Address"
           className="p-4 my-4 w-full bg-gray-700 rounded-lg"
         ></input>
         <input
+          ref={password}
           type="text"
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-700 rounded-lg"
         ></input>
-        <button className="p-4 my-4 w-full bg-red-600 rounded-lg ">
+        <p className="text-red-500 font-bold text-lg">{errorMessage}</p>
+        <button
+          className="p-4 my-4 w-full bg-red-600 rounded-lg "
+          onClick={handleButtonClick}
+        >
           {isSingInForm ? "Sign In" : "Sign Up"}
         </button>
-        <p className="py-4 cursor-pointer" onClick={toggleSignInForm}>
+        <p
+          className="py-4 cursor-pointer hover:text-blue-500 transition duration-500 ease-in-out "
+          onClick={toggleSignInForm}
+        >
           {isSingInForm
             ? "New to Netflix? Sign Up"
             : "Alraedy registered? Sign Now"}
