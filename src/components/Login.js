@@ -7,14 +7,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "./utils/FireBase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "./utils/UserSlice";
+import { USER_LOGO } from "./utils/constants";
 
 const Login = () => {
   const [isSingInForm, setIsSingInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -47,7 +46,7 @@ const Login = () => {
           console.log(user);
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://avatars.githubusercontent.com/u/112467885?v=4",
+            photoURL: USER_LOGO,
           })
             .then(() => {
               // Profile updated! and again store update
@@ -60,7 +59,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error.message);
@@ -80,8 +78,6 @@ const Login = () => {
       )
         .then((userCredential) => {
           const user1 = userCredential.user;
-          console.log(user1);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode1 = error.code;
@@ -112,7 +108,7 @@ const Login = () => {
             ref={name}
             type="text"
             placeholder="Full Name"
-            className="p-4 my-4 w-full bg-gray-700 rounded-lg"
+            className="p-4 my-4 w-full bg-gray-700 rounded-lg "
           ></input>
         )}
         <input
@@ -135,7 +131,7 @@ const Login = () => {
           {isSingInForm ? "Sign In" : "Sign Up"}
         </button>
         <p
-          className="py-4 cursor-pointer hover:text-blue-500 transition duration-500 ease-in-out "
+          className="py-4 cursor-pointer hover:text-blue-500"
           onClick={toggleSignInForm}
         >
           {isSingInForm
