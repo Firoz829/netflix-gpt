@@ -20,6 +20,16 @@
   present its redirect to the browse page
 - unsubsribed to the onAuthStateChanged callback
 - Add hardcoded valuesto the constants file
+- register TMDB API & create an app & get access tokoen
+- grt Data from TMDB now playing movies list API from TMDB doc
+- custome Hooks for now playing movies list api
+- create movieSlice
+- update store with movie data
+- playning for mainContainer & secondary Container
+  -fetch Data for trailer video
+- update store with trailer video data
+- Embedded the YT video and make it autoplay and mute
+- Tailwind classes to make main container look awesome
 
 ## Features
 
