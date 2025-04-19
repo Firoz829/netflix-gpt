@@ -3,8 +3,11 @@ import React from "react";
 const VideoTitle = ({ title, overview }) => {
   return (
     <div className="w-screen aspect-video pt-36 px-24 absolute text-white bg-gradient-to-t from-black">
-      <h1 className="text-6xl font-bold">{title}</h1>
-      <p className="py-6 text-lg w-1/4">{overview}</p>
+      <h1 className="text-6xl font-bold max-w-xl">{title}</h1>
+      <div className="max-w-xl">
+        <p className="">{overview.slice(0, 200)}...</p>
+      </div>
+
       <div>
         <button className="bg-white text-black p-4 px-12 text-xl rounded-lg hover:bg-opacity-80">
           ▶️ Play

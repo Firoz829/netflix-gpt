@@ -12,3 +12,6 @@ export const API_OPTIONS = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NGIxZjM3ZWM3ZjE1ZTI1Y2I4Mjk5OWE1ZjRiZGE0MiIsIm5iZiI6MTc0NDkwNzYzNi40MTYsInN1YiI6IjY4MDEyZDc0NGY1OWMyNGMwZGFkMzdmMSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lcpUzeZa9jrpKmovU9FJPDoErHvDb4z6B544HtjGS0c",
   },
 };
+
+// get the imageCDN link form TMDB -> guide page > basics
+export const IMG_CDN = "https://image.tmdb.org/t/p/w500";
