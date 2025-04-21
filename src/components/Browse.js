@@ -1,8 +1,10 @@
+import { useSelector } from "react-redux";
 import useNowPlayigMovies from "../hooks/useNowPlayingMovies";
 import usePopularMovies from "../hooks/usePopularMovies";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
 import useTvShows from "../hooks/useTvShows";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
+import GptSearch from "./GptSearch";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
 import SecontaryContainer from "./SecontaryContainer";
@@ -16,11 +18,23 @@ const Browse = () => {
   useUpcomingMovies();
   useTopRatedMovies();
   useTvShows();
+
+  //get data from gptslice true or false
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   return (
     <div>
       <Header />
-      <MainContainer />
-      <SecontaryContainer />
+      {
+        //if my showGptSearch is true then show my GptSearch Comp
+        showGptSearch ? (
+          <GptSearch />
+        ) : (
+          <>
+            <MainContainer />
+            <SecontaryContainer />
+          </>
+        )
+      }
     </div>
   );
 };

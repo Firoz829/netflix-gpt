@@ -15,6 +15,7 @@
 - created redux store with userSlice
 - implemented sign out feature
 - update profile api
+  new
 - BugFix: sign up user displayName and profile picture update
 - BugFix: when i type in the URl /browse its check Auth object if the user is not logged in Rerirect / login page and auth obj is
   present its redirect to the browse page
@@ -34,6 +35,8 @@
 - Build the MovieCard
 - TMDB Image CDN url
 - usePopularMovies Custome hook
+  new
+-
 
 ## Features
 

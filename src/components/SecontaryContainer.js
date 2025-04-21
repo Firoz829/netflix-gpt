@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const SecontaryContainer = () => {
   const movies = useSelector((store) => store.movies);
-  console.log(movies.tvShows);
+  // console.log(movies.tvShows);
   return (
     movies.nowPlayingMovies && (
       <div className="bg-black">
